@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import User from './components/User';
+import { createContext, useState } from 'react';
+
+export const ThemeContext = createContext();
 
 function App() {
+  const [user, setUser] = useState({ name: 'John Doe', theme: 'dark' });
+  const toggleTheme = () => {
+    if (user.theme === 'dark') {
+      setUser((prevUser) => ({ ...prevUser, theme: 'light' }));
+    } else {
+      setUser((prevUser) => ({ ...prevUser, theme: 'dark' }));
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>useContext</h1>
+      <ThemeContext.Provider value={user}>
+        <User />
+      </ThemeContext.Provider>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+    </>
   );
 }
 
